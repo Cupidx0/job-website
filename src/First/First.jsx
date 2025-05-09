@@ -4,7 +4,7 @@ import { HiFilter } from 'react-icons/hi';
 import { toast } from "react-toastify";
 import { useAuth } from '../AuthContext.jsx';
 import "react-toastify/dist/ReactToastify.css";
-import { db } from '../firebase';
+import { db } from '../firebase.js';
 import { collection, addDoc } from 'firebase/firestore';
 import {jobFetcher} from "../utils/JobFetcher.js";
 import JobFilterForm from "../JobFilter.jsx";

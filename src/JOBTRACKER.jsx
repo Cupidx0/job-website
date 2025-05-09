@@ -45,17 +45,17 @@ const deleteDocField = async(jobId)=>{
   }
   }
   return (
-    <div>
+    <div className=" gap-5 mb-[300px]">
     <h2 className="text-2xl text-left font-bold mb-10 text-blue-500">Applied Jobs</h2>
-    <section className="m-6 h-screen !overflow-auto">
-      <ul className="mb-[70px]">
+    <section className="flex flex-col m-4 h-[500px] !overflow-scroll mb-[200px]">
+      <ul className="mb-[200px]">
         {appliedJobs.length === 0 ? (
           <li className="text-center text-gray-500">No jobs applied yet.</li>
         ) : (
           appliedJobs.map((newCard, idx) => (
             <li
               key={idx}
-              className="flex flex-col items-start gap-2 transition-transform hover:text-blue-500 rounded-md border border-gray-200 mb-[70px] p-4"
+              className="flex flex-col items-start gap-1 transition-transform hover:text-blue-500 rounded-md border border-gray-200 p-2"
             >
               <h3 className="mt-1 font-bold cursor-pointer" onClick={() => window.open(newCard.link, '_blank')}>
                 {newCard.title} <br /> {newCard.company}
