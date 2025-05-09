@@ -27,7 +27,7 @@ a:hover {
 
 body {
   margin:0;
-  overflow:hidden;
+  overflow: hidden;
   display: flex;
   font-size: 1.2em;
   font-weight: 400;

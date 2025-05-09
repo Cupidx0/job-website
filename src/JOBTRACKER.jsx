@@ -1,9 +1,9 @@
 import React,{ useState, useEffect } from "react";
-import { collection, query, where, getDocs,updateDoc,doc,deleteDoc } from "firebase/firestore";
+import { collection, query, where, getDocs,doc,deleteDoc } from "firebase/firestore";
 import { db } from './firebase';  // Ensure Firestore is imported
 import { useAuth } from './AuthContext';  // Assuming you're using this hook for auth
-import './index.css';
 import { toast } from "react-toastify";
+import './index.css';
 const JobTracker = () => {
   const {user} = useAuth();
   const [appliedJobs, setAppliedJobs] = useState([]);
@@ -31,51 +31,39 @@ const JobTracker = () => {
 
     fetchAppliedJobs();
   }, [user]);  // Re-run this effect when user changes
-const deleteDocField = async(jobId)=>{
-  const docRef = doc(db, "appliedJobs", jobId);
-  try {
+const deleteDocField = async(jobId) => {
+  const docRef = doc(db,'appliedJobs',jobId);
+  try{
     await deleteDoc(docRef);
-    console.log("Job deleted successfully!");
-    toast.success("Job deleted successfully!");
-    // Optionally: update UI
+    console.log('job deleted successfully.');
+    toast.success('job deleted successfully.');
     setAppliedJobs(prev => prev.filter(job => job.id !== jobId));
-  } catch (error) {
-    console.error("Error deleting job: ", error);
-    toast.error("Error deleting job");
+  }catch(err){
+    console.error('error deleting job',err);
+    toast.error('error deleting job');
   }
-  }
+};
   return (
-    <div className=" gap-5 mb-[300px]">
-    <h2 className="text-2xl text-left font-bold mb-10 text-blue-500">Applied Jobs</h2>
-    <section className="flex flex-col m-4 h-[500px] !overflow-scroll mb-[200px]">
-      <ul className="mb-[200px]">
-        {appliedJobs.length === 0 ? (
-          <li className="text-center text-gray-500">No jobs applied yet.</li>
-        ) : (
-          appliedJobs.map((newCard, idx) => (
-            <li
-              key={idx}
-              className="flex flex-col items-start gap-1 transition-transform hover:text-blue-500 rounded-md border border-gray-200 p-2"
-            >
-              <h3 className="mt-1 font-bold cursor-pointer" onClick={() => window.open(newCard.link, '_blank')}>
-                {newCard.title} <br /> {newCard.company}
-              </h3>
-              <p>
-                location: {newCard.location}
-                <br />
-                applied at: {newCard.appliedAt}
-              </p>         
-              <button 
-              onClick={() => deleteDocField(newCard.id)}
-              className="text-red-500 hover:underline mt-2"
-                >Remove Job</button>
-            </li>
-          ))
-        )}
-      </ul>
-    </section>
-  </div>
-  
+    <div>
+      <h2 className="text-2xl text-left font-bold mb-4 text-blue-500">Applied Jobs</h2>
+      <section className="m-4 h-screen !overflow-auto">
+        <ul className="mb-[500px]">
+          {appliedJobs.length === 0 ? (
+            <li className="text-center text-gray-500">No jobs applied yet.</li>
+          ) : (
+            appliedJobs.map((newCard, idx) => (
+              <li key={idx} onClick={()=>window.open(newCard.link)} className="flex items-center gap-2 cursor-pointer transition-transform hover:text-blue-500 rounded-md border border-gray-200 mb-4">
+                <h3 className="mt-1 font-bold">{newCard.title} <br /> {newCard.company}</h3>
+                <p>location:{newCard.location}<br/>applied at:{newCard.appliedAt}</p>
+                <button
+                onClick={()=>deleteDocField(newCard.id)}
+                className="text-red-500 hover:underline mt-2">Remove Job</button>
+              </li>
+            ))
+          )}
+        </ul>
+      </section>
+    </div>
   );
 };
 
