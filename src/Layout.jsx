@@ -16,7 +16,7 @@ function Layout() {
           draggable 
           theme='dark'
           />
-          <Outlet /> 
+          <Outlet/> 
       </main>
       <Footer />
     </>

@@ -84,13 +84,13 @@ function First() {
         salaryMax: newCard.salaryMax,
         date: newCard.date,
         link: newCard.link,
-        appliedAt: new Date().toISOString(),
+        appliedAt: new Date().toLocaleDateString(),
       };
+      await addDoc(collection(db, "appliedJobs"), jobData);
+      toast.success(`Applied to ${newCard.title}`);
       if(newCard.link){
         window.open(newCard.link);
       }
-      await addDoc(collection(db, "appliedJobs"), jobData);
-      toast.success(`Applied to ${newCard.title}`);
     } catch (error) {
       console.error("Error saving job:", error);
       toast.error("Failed to apply. Try again.");
