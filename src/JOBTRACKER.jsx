@@ -52,9 +52,9 @@ const deleteDocField = async(jobId) => {
             <li className="text-center text-gray-500">No jobs applied yet.</li>
           ) : (
             appliedJobs.map((newCard, idx) => (
-              <li key={idx} onClick={()=>window.open(newCard.link)} className="flex items-center gap-2 cursor-pointer transition-transform hover:text-blue-500 rounded-md border border-gray-200 mb-4">
-                <h3 className="mt-1 font-bold">{newCard.title} <br /> {newCard.company}</h3>
-                <p>location:{newCard.location}<br/>applied at:{newCard.appliedAt}</p>
+              <li key={idx} className="flex items-center gap-2 cursor-pointer transition-transform hover:text-blue-500 rounded-md border border-gray-200 mb-4">
+                <h3 className="mt-1 font-bold" onClick={()=>window.open(newCard.link)}>{newCard.title} <br /> {newCard.company}</h3>
+                <p onClick={()=>window.open(newCard.link)}>location:{newCard.location}<br/>applied at:{newCard.appliedAt}</p>
                 <button
                 onClick={()=>deleteDocField(newCard.id)}
                 className="text-red-500 hover:underline mt-2">Remove Job</button>
