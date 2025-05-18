@@ -4,8 +4,8 @@ import {toast} from 'react-toastify';
 //import { FaGoogle } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth} from './firebase';
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/customIcons';
-import { GoogleAuthProvider,createUserWithEmailAndPassword,signInWithPopup} from 'firebase/auth';
+import { GoogleIcon,AppleIcon, FacebookIcon, SitemarkIcon } from './components/customIcons';
+import { GoogleAuthProvider,GithubAuthProvider,createUserWithEmailAndPassword,signInWithPopup} from 'firebase/auth';
 export const SignUp =()=>{
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -47,10 +47,68 @@ export const SignUp =()=>{
         toast.error(err.message);
       }
     };
+    const githubUp = async()=>{
+      const githubProvider = new GithubAuthProvider();
+      try{
+        const userGithubCredential = await signInWithPopup(auth,githubProvider);
+        console.log("user created :", userGithubCredential.user);
+        toast.success("Signup successful!");
+        navigate('/home');
+      }catch (error) {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // You might also get email or credential depending on the error
+        const email = error.email; // For account-exists-with-different-credential
+        const credential = error.credential; // The GitHub credential for linking
+    
+        // Check if the error is the specific account-exists-with-different-credential error
+        if (errorCode === 'auth/account-exists-with-different-credential') {
+          console.warn('Account exists with a different credential:', email);
+          console.log('Pending GitHub credential:', credential);
+    
+          // This is where you implement the linking flow:
+          // 1. You have the email (error.email) which exists.
+          // 2. You have the new GitHub credential (error.credential) that the user tried to use.
+    
+          // Next steps (you need to implement this part based on your UI):
+          // A. INFORM THE USER: Tell the user that an account already exists for that email,
+          //    and it's associated with a different provider.
+          //    You could use `fetchSignInMethodsForEmail(auth, email)` to find out which provider(s) they used before and inform them.
+    
+          // B. PROMPT USER TO SIGN IN WITH EXISTING PROVIDER: Ask the user to sign in
+          //    using the original method they used (e.g., if they used Google, prompt them to sign in with Google).
+          //    You'll use another sign-in method here, like `signInWithPopup` or `signInWithRedirect`
+          //    using the *original* provider associated with that email.
+    
+          // C. AFTER SUCCESSFUL SIGN-IN WITH EXISTING PROVIDER: Once they successfully sign
+          //    in with their original account, you will get a User object for their existing account.
+          //    Then, you use that User object and the saved `credential` from THIS GitHub error
+          //    to link the GitHub account:
+          //    `await linkWithCredential(auth.currentUser, credential);`
+          //    (Make sure auth.currentUser is not null after they re-authenticate with the existing method).
+    
+          // D. SUCCESS: If linking is successful, the user is now signed into their
+          //    original account, and their GitHub login is linked to it. You can then navigate.
+    
+          // For now, you can just show a user-friendly message explaining the situation
+          // and perhaps guide them on what to do next (e.g., "An account with this email already exists. Please sign in with the method you used previously.")
+          toast.error(`An account with this email already exists. Please sign in with your existing method to link your GitHub account.`);
+    
+          // Important: Do NOT navigate away or proceed as if the user is signed in
+          // until the linking process (steps B and C above) is complete.
+    
+        } else {
+          // Handle other errors (network issues, incorrect credentials for a new account, etc.)
+          console.error("Authentication Error:", error);
+          toast.error(errorMessage); // Show the generic error message for other errors
+        }
+      }
+    }
     return(
-        <div className="max-w-md text-white mx-auto p-3 bg-black border border-gray-600 rounded-xl shadow-md mb-10 mt-0 overflow-scroll">
-      <h2 className="text-xl text-center font-bold mb-1">Create An Account</h2>
-      <form  className="space-y mb-1" onSubmit={handleSignup}>
+        <div className="max-w-[300px] max-h-[500px] text-white mx-auto p-3 bg-black border border-gray-700 rounded-md shadow-md mb-6 mt-0 overflow-scroll">
+      <h2 className="text-xl text-center font-bold mb-4">Create An Account</h2>
+      <form  className="space-y mb-1 bg-transparent" onSubmit={handleSignup}>
         <div>
           <label htmlFor='firstname' className="block text-sm font-medium">First Name</label>
           <input
@@ -59,7 +117,7 @@ export const SignUp =()=>{
             placeholder="First Name"
             value = {firstName}
             onChange ={(e)=> setFirstName(e.target.value)}
-            className="mt-1 block w-full border px-3 py-1 rounded-md text-white"
+            className="mt-1 block w-full max-w-md border px-3 py-2 rounded-md bg-transparent text-white sm:max-w-sm"
           />
         </div>
         <div>
@@ -70,7 +128,7 @@ export const SignUp =()=>{
             placeholder="Last Name"
             value = {lastName}
             onChange = {(e)=> setLastName(e.target.value)}
-            className="mt-1 block w-full border px-3 py-1 rounded-md text-white"
+            className="mt-1 block w-full border px-3 py-2 rounded-md bg-transparent text-white"
           />
         </div>
         <div>
@@ -81,7 +139,7 @@ export const SignUp =()=>{
             placeholder="Email"
             value = {email}
             onChange = {(e)=>setEmail(e.target.value)}
-            className="mt-1 block w-full border px-3 py-1 rounded-md text-white"
+            className="mt-1 block w-full border px-3 py-2 rounded-md bg-transparent text-white"
           />
         </div>
         <div>
@@ -92,7 +150,7 @@ export const SignUp =()=>{
             placeholder="Password"
             value = {password}
             onChange = {(e)=>setPassword(e.target.value)}
-            className="mt-1 block w-full border px-3 py-1 rounded-md text-white"
+            className="mt-1 block w-full border px-3 py-2 rounded-md bg-transparent text-white"
           />
           <label htmlFor='confirmpassword' className="block text-sm font-medium">Confirm Password</label>
           <input
@@ -101,29 +159,33 @@ export const SignUp =()=>{
             placeholder="Confirm Password"
             value = {confirmPassword}
             onChange = {(e)=>setConfirmPassword(e.target.value)}
-            className="mt-1 block w-full border px-3 py-1 mb-1 rounded-md text-white"
+            className="mt-1 block w-full border px-3 py-2 mb-1 bg-transparent rounded-md text-white"
           />
         </div>
         {error && <p className="text-red-500">{error}</p>}
-        <div className='text-center'>
+        <div className='text-center max-w-sm'>
           <button
             type="submit"
-            className="w-full border border-gray-600 bg-green-600 text-white py-1 rounded-md hover:bg-blue-700"
+            className="w-full border border-gray-600 bg-green-600 text-white py-2 rounded-md hover:bg-blue-700"
           >
             Sign Up
           </button>
-          <divider>or</divider>
+
           <button 
             onClick={googleUp}
-            className="flex text-center w-full border border-gray-600 bg-black-400 mt-3 text-white py-1 gap-1 items-center pl-[100px] rounded-md hover:bg-black-400"
-            ><GoogleIcon className='mt-1 text-center items-center ml-[500px]'/>Sign In With Google</button>
-        </div>
-        <p className="mt-4 text-sm  text-center">
+            className="flex items-center justify-center w-full border border-gray-600 py-2 rounded-md hover:bg-gray-800"
+            ><GoogleIcon className='mr-2'/>Sign In With Google</button>
+          <button 
+          onClick={githubUp}
+          className="flex items-center justify-center w-full border border-gray-600 py-2 rounded-md hover:bg-gray-800"
+          ><AppleIcon className='mr-2'/>Sign In With Github</button>
+          <p className="mt-4 text-sm  text-center">
           Already have an account?{' '}
           <Link to ="/login" className="text-blue-500 hover:underline">
             Log In
           </Link>
         </p>
+        </div>
       </form>
     </div>
     )

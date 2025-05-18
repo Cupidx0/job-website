@@ -7,8 +7,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #040404;
+  color: rgba(242, 239, 239, 0.87);
+  background-color: #020202;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,8 +30,7 @@ body {
   overflow: hidden;
   display: flex;
   font-size: 1.2em;
-  font-weight: 400;
-  min-width: 320px;
+  font-weight: 300;
 }
 
 h1 {
@@ -71,14 +70,16 @@ button:focus-visible {
 }
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #bfc3c6;
+    background-color: #050505;
+    max-width: 600px;
+    padding: auto;
   }
   a:hover {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #0f0f0f;
   }
 }
 .content {
@@ -92,12 +93,12 @@ button:focus-visible {
   background-color: #0c0c0c;
 }
 .foot{
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   bottom: 0;
   width: 100vw;
   position: absolute;
-  background-color: #090909;
+  background-color: #a6a2a2;
 }
 ul{
   margin-right: 30px;

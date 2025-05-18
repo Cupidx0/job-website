@@ -45,7 +45,7 @@ const deleteDocField = async(jobId) => {
 };
   return (
     <div>
-      <h2 className="text-2xl text-left font-bold mb-4 text-blue-500">Applied Jobs</h2>
+      <h2 className="max-w-sm text-2xl text-left font-bold mb-4 text-blue-500">Applied Jobs</h2>
       <section className="m-4 h-screen !overflow-auto">
         <ul className="mb-[500px]">
           {appliedJobs.length === 0 ? (

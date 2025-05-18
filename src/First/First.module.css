@@ -45,7 +45,7 @@ img{
     align-items: center;
     padding: 1em;
     overflow: scroll;
-    margin-bottom: 2px;
+    margin-bottom: 5px;
     max-width: 400px;
     max-height:500px ;
     cursor: grab;
@@ -70,8 +70,10 @@ img{
 .container {
     display: flex;
     place-items: center;
-    margin-top: 100px;
-    min-width: 320px;
+    margin-top: 60px;
+    max-width: 320px;
+    align-items: center;
+    margin: auto;
     justify-content: center !important;
 }
 .swipeLeft {

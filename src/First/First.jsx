@@ -130,7 +130,7 @@ function First() {
       <HiFilter size={30}/>
       </div>
       {showFilter&&(
-              <div className= {`absolute top-20 left-20 bg-white text-black rounded-md p-4 overflow-auto z-20 -translate-x-8 ${styles.animateLeft}`} ref = {filterRef}>
+              <div className= {`max-w-sm absolute top-20 left-20 bg-white text-black rounded-md p-2 overflow-auto z-20 -translate-x-8 ${styles.animateLeft}`} ref = {filterRef}>
                   <div className="mt-2 p-3 bg-blue-100 rounded-md w-full">
                     <JobFilterForm onFilter={handleFilter}/>
                 </div>
@@ -141,7 +141,7 @@ function First() {
     <div className={styles.container} id="content">
       {newCard ?(
                    
-        <div ref={cardRef} className={`flex flex-col items-center justify-center p-4 border border-gray-400 bg-gray-900 rounded-lg max-w-md max-h-[400px] cursor-grab transition-transform duration-300 overflow-scroll ease-in-out 
+        <div ref={cardRef} className={`flex flex-col items-center justify-center p-4 border border-gray-400 bg-gray-900 rounded-lg max-w-md max-h-md cursor-grab transition-transform duration-300 overflow-scroll ease-in-out 
           ${swipeDirection === "left" ? styles.swipeLeft: swipeDirection === "right" ? styles.swipeRight : ""}
         `} 
             onTouchStart={handleTouchStart}

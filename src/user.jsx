@@ -36,7 +36,7 @@ export const UserDetails =()=>{
                 <h2 className="text-2xl font-bold">profile</h2>
                 <p>View all your profile details here.</p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-col md:flex-row gap-3">
                 <section className="flex flex-col items-center justify-center p-4 border border-gray-400 bg-gray-900 rounded-md max-w-[250px] max-h-[400px] ml-4 cursor-grab transition-transform duration-300 overflow-scroll ease-in-out">
                     <h3>{user? user.email : 'not logged in'}</h3>
                     <button
@@ -48,7 +48,7 @@ export const UserDetails =()=>{
                 </section>
             </div>
             <button 
-             className=" m-6 rounded-md p-1 text-md cursor-pointer bg-red-500 hover:bg-red-400"
+             className="m-6 rounded-md p-1 text-md cursor-pointer bg-red-500 hover:bg-red-400"
              onClick={logOut}
              >logout</button>
         </>

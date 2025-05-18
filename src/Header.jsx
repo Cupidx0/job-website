@@ -25,7 +25,7 @@ function Header({isOpen, setIsOpen}){
     return(
         <header>
             <div className="content">
-                <h2 className='text-2xl font-bold mb-4'><Link to = "/home" className='text-1xl font-bold mb-4 flex items-center gap-1 transition-transform hover:scale-105 hover:text-blue-400'>Job swipe</Link>
+                <h2 className='text-2xl font-bold'><Link to = "/home" className='text-1xl font-bold flex items-center gap-1 transition-transform hover:scale-105 hover:text-blue-400'>Job swipe</Link>
                 </h2>
                 {isLoggedIn ? (
                     <p className='text-md font-small border border-gray-200 rounded-md p-1 items-center text-center mt-4 ml-10 text-blue-500'>Welcome, {user?.email}</p>
@@ -44,10 +44,9 @@ function Header({isOpen, setIsOpen}){
                                 <ul className='gap-4 top-30 right-0 flex flex-col'>
                                     <li><Link to = "/home" onClick={()=> setIsOpen(false)}><AiFillHome/></Link></li>
                                     <li><Link to = "/user" onClick={()=>setIsOpen(false)}><CgProfile/></Link></li>
-                                    <li><a href="#about" onClick={()=> setIsOpen(false)}>About</a></li>
                                     <li><Link to = "/login" onClick={()=> setIsOpen(false)}>Login</Link></li>
                                     <li><Link to = "/Jobtracker" onClick={()=> setIsOpen(false)}>Applied Jobs</Link></li>
-                                    <li><a href="#contact" onClick={()=> setIsOpen(false)}>Contact</a></li>
+                                    <li><a href="/contact" onClick={()=> setIsOpen(false)}>Contact</a></li>
                                 </ul>
                         </nav>
                 )}
