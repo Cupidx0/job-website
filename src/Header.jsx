@@ -25,7 +25,7 @@ function Header({isOpen, setIsOpen}){
     return(
         <header>
             <div className="content">
-                <h2 className='text-2xl font-bold'><Link to = "/home" className='text-1xl font-bold flex items-center gap-1 transition-transform hover:scale-105 hover:text-blue-400'>Job swipe</Link>
+                <h2 className='text-2xl font-bold'><Link to = "/home" className='text-1xl font-bold flex items-center gap-1 transition-transform hover:scale-105 hover:text-blue-400'>Job Swipr</Link>
                 </h2>
                 {isLoggedIn ? (
                     <p className='text-md font-small border border-gray-200 rounded-md p-1 items-center text-center mt-4 ml-10 text-blue-500'>Welcome, {user?.email}</p>

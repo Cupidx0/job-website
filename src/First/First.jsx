@@ -1,6 +1,6 @@
 import React , {useState,useEffect, useRef, createElement} from "react";
 import styles from "./First.module.css";
-import { HiFilter } from 'react-icons/hi';
+import { HiFilter,HiX } from 'react-icons/hi';
 import { toast } from "react-toastify";
 import { useAuth } from '../AuthContext.jsx';
 import "react-toastify/dist/ReactToastify.css";
@@ -22,6 +22,9 @@ function First() {
   const [cardIndex, setCardIndex] = useState(0);
   const  navRef = useRef(null);
   const filterRef = useRef(null);
+  const close = ()=>{
+      setShowJobInfo(!showJobInfo);
+  }
   useEffect(()=>{
     const cards = async ()=>{
       const jobCards = await jobFetcher();
@@ -68,6 +71,7 @@ function First() {
   const handleMouseUp = (e) => {
     handleSwipe(e.clientX - touchStartX);
   };
+  
   const applyToJob = async (newCard) => {
     try {
       if (!user||!user.uid) {
@@ -163,6 +167,7 @@ function First() {
                   <>
                    <div className={`absolute bottom-0 left-0 bg-white text-black rounded-md p-4 overflow-auto z-20 -translate-y-8 ${styles.animateslideIn}`}>
                     <div className={styles.animateslideIn}>
+                    <HiX size={30} className="text-red-600 mr-0 ml-[90vw] justify-right items-right cursor-pointer" onClick={close}/>
                     <div className="mt-2 p-3 bg-blue-100 rounded-md w-full">
                         <details className="cursor-pointer">
                           <summary className="text-blue-600 underline font-semibold">Get to job through link</summary>
